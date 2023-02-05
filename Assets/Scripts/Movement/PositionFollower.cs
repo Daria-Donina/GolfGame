@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Movement
@@ -12,6 +13,11 @@ namespace Movement
         [Tooltip("The less, the smoother")]
         [SerializeField] private float smoothness;
 
+        private void Start()
+        {
+            transform.LookAt(objectToFollow.position);
+        }
+
         private void Update()
         {
             Follow();
@@ -21,8 +27,6 @@ namespace Movement
         {
             var startPosition = transform.position;
             var targetPosition = objectToFollow.position;
-            
-            transform.LookAt(targetPosition);
 
             targetPosition.y = startPosition.y;
             targetPosition.z -= distanceZ;
