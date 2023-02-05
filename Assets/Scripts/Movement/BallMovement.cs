@@ -1,4 +1,5 @@
 using Camera;
+using Cysharp.Threading.Tasks;
 using InputService;
 using UnityEngine;
 using Zenject;
@@ -9,6 +10,7 @@ namespace Movement
     {
         [SerializeField] private Rigidbody rb;
         [SerializeField] private float impulseForce;
+        [SerializeField] private float minSpeedConstraint;
     
         private IInputService _inputService;
 
@@ -23,6 +25,16 @@ namespace Movement
         {
             var worldDirection = CameraUtils.InputToWorldDirection(direction);
             rb.AddForce(worldDirection * impulseForce, ForceMode.Impulse);
+            MovingCoroutine().Forget();
+        }
+
+        private async UniTaskVoid MovingCoroutine()
+        {
+            await UniTask.NextFrame();
+            await UniTask.WaitWhile(() => rb.velocity.magnitude > minSpeedConstraint);
+
+            rb.velocity = Vector3.zero;
+            _inputService.Enable(true);
         }
     }
 }

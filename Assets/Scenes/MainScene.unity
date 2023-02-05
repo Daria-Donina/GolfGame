@@ -469,6 +469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 683931316}
   impulseForce: 1
+  minSpeedConstraint: 0.05
 --- !u!54 &683931316
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -763,7 +764,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &902868064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1033,7 +1034,7 @@ GameObject:
   - component: {fileID: 1264032631}
   - component: {fileID: 1264032635}
   m_Layer: 5
-  m_Name: Joystick
+  m_Name: JoystickCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1277,94 +1278,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1264032634}
     m_Modifications:
-    - target: {fileID: 2979615802280169506, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802280169506, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802280169506, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802280169506, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_Color.r
-      value: 0.7019608
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802280169533, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802280169533, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543508, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_Color.a
-      value: 0.62352943
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543508, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_Color.b
-      value: 0.44313726
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543508, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_Color.g
-      value: 0.44313726
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543508, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_Color.r
-      value: 0.44313726
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543511, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543511, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543511, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543511, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543511, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543511, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543511, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543511, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543511, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543511, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.00000017123382
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543511, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.00000011920928
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615802457543511, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.00000011920929
-      objectReference: {fileID: 0}
     - target: {fileID: 2979615803766715141, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
       propertyPath: m_Name
       value: BallJoystick
@@ -1404,18 +1317,6 @@ PrefabInstance:
     - target: {fileID: 2979615803766715146, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
       propertyPath: m_SizeDelta.y
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615803766715146, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3480892
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615803766715146, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.3480892
-      objectReference: {fileID: 0}
-    - target: {fileID: 2979615803766715146, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.3480892
       objectReference: {fileID: 0}
     - target: {fileID: 2979615803766715146, guid: 12555abfc9be44e6db9b9970183ac124, type: 3}
       propertyPath: m_LocalPosition.x
