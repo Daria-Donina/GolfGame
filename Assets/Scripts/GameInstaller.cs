@@ -4,13 +4,13 @@ using Zenject;
 
 public class GameInstaller : MonoInstaller
 {
-    [SerializeField] private JoystickInput joystick;
+    // [SerializeField] private JoystickInput joystick;
         
     public override void InstallBindings()
     {
-        Container.Bind<IInputService>()
-            .To<JoystickInput>()
-            .FromInstance(joystick)
-            .AsSingle();
+        // Container.Bind<IInputService>()
+        //     .To<JoystickInput>()
+        //     .FromInstance(joystick)
+        //     .AsSingle();
     }
 }

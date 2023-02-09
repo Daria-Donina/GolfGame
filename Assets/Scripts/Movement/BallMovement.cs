@@ -1,3 +1,4 @@
+using System;
 using Camera;
 using Cysharp.Threading.Tasks;
 using InputService;
@@ -9,16 +10,13 @@ namespace Movement
     public class BallMovement : MonoBehaviour
     {
         [SerializeField] private Rigidbody rb;
+        [SerializeField] private JoystickInput input;
         [SerializeField] private float impulseForce;
         [SerializeField] private float minSpeedConstraint;
-    
-        private IInputService _inputService;
 
-        [Inject]
-        public void Construct(IInputService inputService)
+        private void Start()
         {
-            _inputService = inputService;
-            _inputService.DragCompleted += GetImpulse;
+            input.DragCompleted += GetImpulse;
         }
 
         private void GetImpulse(Vector2 direction)
@@ -34,7 +32,7 @@ namespace Movement
             await UniTask.WaitWhile(() => rb.velocity.magnitude > minSpeedConstraint);
 
             rb.velocity = Vector3.zero;
-            _inputService.Enable(true);
+            input.Enable(true);
         }
     }
 }

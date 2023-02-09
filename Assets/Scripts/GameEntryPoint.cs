@@ -25,7 +25,7 @@ namespace DefaultNamespace
             var levelLauncher = new LevelLauncher(sceneObjectsFactory, mapContainer, playersContainer);
 
             //TODO load info about the levels from configs
-            levelLauncher.StartLevel("test_map", new List<string>() {"ball"});
+            levelLauncher.StartLevel("ground_test", new List<string>() {"Ball"}, 0);
         }
     }
 }
