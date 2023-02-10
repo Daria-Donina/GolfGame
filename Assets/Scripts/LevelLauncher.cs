@@ -39,17 +39,10 @@ namespace DefaultNamespace
             {
                 var player = _factory.Spawn<BallMovement>(playerNames[index], _playerContainer);
                 if (index == thisPlayerIndex) 
-                    thisPlayer = InitializeManagedPlayer(player);
+                    thisPlayer = player;
             }
 
             return thisPlayer;
-        }
-
-        private static BallMovement InitializeManagedPlayer(BallMovement player)
-        {
-            //var input = player.GetComponentInChildren<IInputService>();
-            //player.Construct(input);
-            return player;
         }
     }
 }

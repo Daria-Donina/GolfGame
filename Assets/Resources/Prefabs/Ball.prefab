@@ -129,9 +129,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3827490134771228721}
-  impulseForce: 1
-  minSpeedConstraint: 0.05
   input: {fileID: 2039692107306917884}
+  impulseForce: 5
+  minSpeedConstraint: 0.05
 --- !u!1 &3827490135366012403
 GameObject:
   m_ObjectHideFlags: 0
