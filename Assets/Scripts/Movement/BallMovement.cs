@@ -9,7 +9,7 @@ using Zenject;
 
 namespace Movement
 {
-    public class BallMovement : MonoBehaviour
+    public class BallMovement : MonoBehaviour, IFollowable
     {
         [SerializeField] private Rigidbody rb;
         [SerializeField] private JoystickInput input;
@@ -18,6 +18,7 @@ namespace Movement
         
         private CancellationTokenSource _cancellationTokenSource;
 
+        public Vector3 StaticPosition => transform.position;
         public IObservable<Vector3> Position { get; private set; }
 
         private void Awake()

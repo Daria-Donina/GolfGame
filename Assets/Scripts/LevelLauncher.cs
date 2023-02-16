@@ -1,34 +1,50 @@
 using System.Collections.Generic;
 using Camera;
+using DefaultNamespace.Configs;
 using DefaultNamespace.Map;
+using DefaultNamespace.Progress;
 using InputService;
 using Movement;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class LevelLauncher
+    public class LevelLauncher : ISavedProgress
     {
-        private readonly SceneObjectsFactory _factory;
+        private readonly ISceneObjectsFactory _factory;
         private readonly Transform _mapContainer;
         private readonly Transform _playerContainer;
+        private readonly SaveLoadService _saveLoadService;
+        private readonly ConfigsService _configsService;
+        private int _currentLevel;
 
-        public LevelLauncher(SceneObjectsFactory factory, Transform mapContainer, Transform playerContainer)
+        public LevelLauncher(ISceneObjectsFactory factory,
+            Transform mapContainer,
+            Transform playerContainer,
+            SaveLoadService saveLoadService, 
+            ConfigsService configsService)
         {
+            _configsService = configsService;
+            _saveLoadService = saveLoadService;
             _playerContainer = playerContainer;
             _mapContainer = mapContainer;
             _factory = factory;
         }
         
-        public void StartLevel(string mapName, List<string> playerNames, int thisPlayerIndex)
+        public void StartLevel(int levelId)
         {
-            PrepareMap(mapName);
-            var player = PreparePlayers(playerNames, thisPlayerIndex);
+            _currentLevel = levelId;
+            _saveLoadService.SaveProgress();
+
+            var mapData = _configsService.GetStaticData<MapsStaticData>().GetDataBy(levelId);
+            
+            PrepareMap(mapData.mapName);
+            var player = PreparePlayers(new List<string> {mapData.playerPrefab}, 0);
             PrepareCamera(player);
         }
 
-        private void PrepareCamera(BallMovement ballMovement) => 
-            CameraUtils.MainCamera.GetComponent<CameraMovement>().Initialize(ballMovement);
+        private void PrepareCamera(BallMovement following) => 
+            CameraUtils.MainCamera.GetComponent<CameraMovement>().Initialize(following);
 
         private void PrepareMap(string mapName) => _factory.Spawn(mapName, _mapContainer);
 
@@ -44,5 +60,10 @@ namespace DefaultNamespace
 
             return thisPlayer;
         }
+
+        public void LoadProgress(PlayerProgress progress) { }
+
+        public void UpdateProgress(PlayerProgress progress) => 
+            progress.playerInfo.level = _currentLevel;
     }
 }

@@ -7,9 +7,9 @@ namespace Movement
     {
         private Vector3 _previousBallPosition;
 
-        public void Initialize(BallMovement objectToFollow)
+        public void Initialize(IFollowable objectToFollow)
         {
-            var initialPosition = objectToFollow.transform.position;
+            var initialPosition = objectToFollow.StaticPosition;
             _previousBallPosition = initialPosition;
 
             objectToFollow.Position.Subscribe(Follow);

@@ -1,16 +1,19 @@
+using DefaultNamespace.Map;
+using DefaultNamespace.Progress;
 using InputService;
 using UnityEngine;
 using Zenject;
 
 public class GameInstaller : MonoInstaller
 {
-    // [SerializeField] private JoystickInput joystick;
-        
     public override void InstallBindings()
     {
-        // Container.Bind<IInputService>()
-        //     .To<JoystickInput>()
-        //     .FromInstance(joystick)
-        //     .AsSingle();
+        Container.Bind<IProgressService>()
+            .To<ProgressService>()
+            .AsSingle();
+        
+        Container.Bind<ISceneObjectsFactory>()
+            .To<SceneObjectsFactory>()
+            .AsSingle();
     }
 }

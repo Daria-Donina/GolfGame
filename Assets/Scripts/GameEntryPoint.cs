@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using DefaultNamespace.Configs;
 using DefaultNamespace.Loaders;
 using DefaultNamespace.Map;
+using DefaultNamespace.Progress;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -20,12 +22,31 @@ namespace DefaultNamespace
 
         private void SingleGameSimpleStart()
         {
-            var prefabLoader = new PrefabLoader();
+            var prefabLoader = new BaseAssetLoader<GameObject>("Prefabs");
             var sceneObjectsFactory = new SceneObjectsFactory(prefabLoader);
-            var levelLauncher = new LevelLauncher(sceneObjectsFactory, mapContainer, playersContainer);
 
-            //TODO load info about the levels from configs
-            levelLauncher.StartLevel("ground_test", new List<string>() {"Ball"}, 0);
+            var progressService = new ProgressService();
+            var saveLoadService = new SaveLoadService(progressService, sceneObjectsFactory);
+            var progress = LoadProgressOrInitNew(progressService, saveLoadService);
+
+            var configsLoader = new BaseAssetLoader<BaseConfig>("Configs");
+            var configsService = new ConfigsService(configsLoader);
+            
+            var levelLauncher = new LevelLauncher(sceneObjectsFactory,
+                mapContainer,
+                playersContainer,
+                saveLoadService,
+                configsService);
+            levelLauncher.StartLevel(progress.playerInfo.level);
+        }
+        
+        private PlayerProgress LoadProgressOrInitNew(ProgressService progressService, SaveLoadService saveLoadService) => 
+            progressService.Progress = saveLoadService.LoadProgress() ?? NewProgress();
+
+        private PlayerProgress NewProgress()
+        {
+            var progress = new PlayerProgress(levelId: 1);
+            return progress;
         }
     }
 }
