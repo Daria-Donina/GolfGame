@@ -12,6 +12,8 @@ namespace DefaultNamespace
     {
         [SerializeField] private Transform mapContainer;
         [SerializeField] private Transform playersContainer;
+        
+        private ProgressServerHandler _progressServerHandler;
 
         private void Awake()
         {
@@ -26,8 +28,8 @@ namespace DefaultNamespace
             var sceneObjectsFactory = new SceneObjectsFactory(prefabLoader);
 
             var progressService = new ProgressService();
-            var progressServerHandler = new ProgressServerHandler();
-            var saveLoadService = new SaveLoadService(progressService, sceneObjectsFactory, progressServerHandler);
+            _progressServerHandler = new ProgressServerHandler();
+            var saveLoadService = new SaveLoadService(progressService, sceneObjectsFactory, _progressServerHandler);
             var progress = LoadProgressOrInitNew(progressService, saveLoadService);
 
             var configsLoader = new BaseAssetLoader<BaseConfig>("Configs");
@@ -44,8 +46,6 @@ namespace DefaultNamespace
         private PlayerProgress LoadProgressOrInitNew(ProgressService progressService, SaveLoadService saveLoadService)
         {
             var loadedProgress = saveLoadService.LoadProgress();
-            if (loadedProgress != null)
-                Debug.Log(loadedProgress.playerInfo.level);
             return progressService.Progress = loadedProgress 
                                               ?? NewProgress();
         }
@@ -54,6 +54,11 @@ namespace DefaultNamespace
         {
             var progress = new PlayerProgress(levelId: 1);
             return progress;
+        }
+
+        private void OnDestroy()
+        {
+            _progressServerHandler?.Dispose();
         }
     }
 }

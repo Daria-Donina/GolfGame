@@ -9,48 +9,43 @@ using UnityEngine;
 
 namespace DefaultNamespace.Progress
 {
-    public class ProgressServerHandler
+    public class ProgressServerHandler : IDisposable
     {
-        private string Uri => ServerConstants.ServerRootUri + "progress/";
-        private string ProfileID => SystemInfo.deviceUniqueIdentifier;
+        private const string JsonContentMediaType = "application/json";
+        private readonly HttpClient _client;
+        
+        private static string RequestUri => $"profile_id={ProfileID}";
+        private static string Uri => ServerConstants.ServerRootUri + "progress/";
+        private static string ProfileID => SystemInfo.deviceUniqueIdentifier;
+
+        public ProgressServerHandler()
+        {
+            _client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate });
+            _client.BaseAddress = new Uri(Uri);
+        }
 
         public void SaveProgress(string data)
         {
-            Debug.Log("Making API post call...");
-            using var client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate });
-            
-            client.BaseAddress = new Uri(Uri);
-            Debug.Log($"Profile_id {ProfileID}");
-            var requestUri = $"profile_id={ProfileID}";
-            
-            var content = new StringContent(data, Encoding.UTF8, "application/json");
-            var response = client.PostAsync(requestUri, content).Result;
+            var content = new StringContent(data, Encoding.UTF8, JsonContentMediaType);
+            var response = _client.PostAsync(RequestUri, content).Result;
 
             response.EnsureSuccessStatusCode();
-            var result = response.Content.ReadAsStringAsync().Result;
-            Debug.Log("Result: " + result);
         }
 
         public string LoadProgress()
         {
-            Debug.Log("Making API get call...");
-            using var client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate });
-            
-            client.BaseAddress = new Uri(Uri);
-            var requestUri = $"profile_id={ProfileID}";
-            var response = client.GetAsync(requestUri).Result;
-
-            if (response.StatusCode == HttpStatusCode.NotFound)
-            {
-                Debug.Log($"Result: {response.StatusCode}");
-                return null;
-            }
+            var response = _client.GetAsync(RequestUri).Result;
             
             response.EnsureSuccessStatusCode();
             var result = response.Content.ReadAsStringAsync().Result;
-            Debug.Log("Result: " + result);
 
             return result;
+        }
+
+
+        public void Dispose()
+        {
+            _client?.Dispose();
         }
     }
 }
