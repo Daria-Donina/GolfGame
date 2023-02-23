@@ -6,9 +6,7 @@ namespace Camera
     {
         public static UnityEngine.Camera MainCamera => UnityEngine.Camera.main;
         
-        public static Vector3 InputToWorldDirection(Vector2 point)
-        {
-            return MainCamera.transform.TransformDirection(point);
-        }
+        public static Vector3 InputToWorldDirection(Vector2 point) => 
+            MainCamera.transform.TransformDirection(-point);
     }
 }

@@ -29,9 +29,7 @@ namespace Movement
 
         private void GetImpulse(Vector2 direction)
         {
-            Debug.Log($"Input: {direction}");
             var worldDirection = CameraUtils.InputToWorldDirection(direction);
-            Debug.Log($"World direction: {worldDirection}");
             rb.AddForce(worldDirection * impulseForce, ForceMode.Impulse);
             MovingCoroutine().Forget();
         }
