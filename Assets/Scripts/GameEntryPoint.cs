@@ -26,7 +26,8 @@ namespace DefaultNamespace
             var sceneObjectsFactory = new SceneObjectsFactory(prefabLoader);
 
             var progressService = new ProgressService();
-            var saveLoadService = new SaveLoadService(progressService, sceneObjectsFactory);
+            var progressServerHandler = new ProgressServerHandler();
+            var saveLoadService = new SaveLoadService(progressService, sceneObjectsFactory, progressServerHandler);
             var progress = LoadProgressOrInitNew(progressService, saveLoadService);
 
             var configsLoader = new BaseAssetLoader<BaseConfig>("Configs");
@@ -40,8 +41,14 @@ namespace DefaultNamespace
             levelLauncher.StartLevel(progress.playerInfo.level);
         }
         
-        private PlayerProgress LoadProgressOrInitNew(ProgressService progressService, SaveLoadService saveLoadService) => 
-            progressService.Progress = saveLoadService.LoadProgress() ?? NewProgress();
+        private PlayerProgress LoadProgressOrInitNew(ProgressService progressService, SaveLoadService saveLoadService)
+        {
+            var loadedProgress = saveLoadService.LoadProgress();
+            if (loadedProgress != null)
+                Debug.Log(loadedProgress.playerInfo.level);
+            return progressService.Progress = loadedProgress 
+                                              ?? NewProgress();
+        }
 
         private PlayerProgress NewProgress()
         {

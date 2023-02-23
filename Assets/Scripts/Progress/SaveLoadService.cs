@@ -1,19 +1,21 @@
 using DefaultNamespace.Map;
+using UnityEngine;
 using Zenject;
 
 namespace DefaultNamespace.Progress
 {
     public class SaveLoadService
     {
-        private const string ProgressKey = "Progress";
-        
         private readonly ISceneObjectsFactory _gameFactory;
         private readonly IProgressService _progressService;
+        private readonly ProgressServerHandler _progressServerHandler;
 
-        public SaveLoadService(IProgressService progressService, ISceneObjectsFactory gameFactory)
+        public SaveLoadService(IProgressService progressService, ISceneObjectsFactory gameFactory,
+            ProgressServerHandler progressServerHandler)
         {
             _gameFactory = gameFactory;
             _progressService = progressService;
+            _progressServerHandler = progressServerHandler;
         }
 
         public void SaveProgress()
@@ -21,13 +23,10 @@ namespace DefaultNamespace.Progress
             foreach (var progressWriter in _gameFactory.ProgressWriters)
                 progressWriter.UpdateProgress(_progressService.Progress);
             
-            //PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());
+            _progressServerHandler.SaveProgress(_progressService.Progress.ToJson());
         }
 
-        public PlayerProgress LoadProgress()
-        {
-            return null;
-            //return PlayerPrefs.GetString(ProgressKey)?.ToDeserialized<PlayerProgress>();
-        }
+        public PlayerProgress LoadProgress() => 
+            _progressServerHandler.LoadProgress()?.ToDeserialized<PlayerProgress>();
     }
 }

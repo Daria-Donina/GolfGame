@@ -240,7 +240,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a776825e240c4a7da6e456deae4605da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 0}
 --- !u!114 &489877378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -869,10 +868,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ff3e6971db84988aa8be1a29621d9b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToFollow: {fileID: 0}
-  distanceZ: 1
-  distanceX: 1
-  smoothness: 1.4
 --- !u!1 &2044630480
 GameObject:
   m_ObjectHideFlags: 0
